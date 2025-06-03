@@ -1,0 +1,11 @@
+----Per creare container
+conda create -n project-test python=3.12
+
+----Per attivare e selezionare il container
+conda activate project-test
+
+----Per installare le dipendenze
+pip install fastapi uvicorn sqlmodel
+
+----Per startare il server bisogna andare nella directory corretta e lanciare
+anaconda uvicorn main:app --reload
