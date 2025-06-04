@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock
 from decimal import Decimal
-from dto.itemDto import ItemCreate, ItemRead
-from service.itemService import create_item
+from dto.item_dto import ItemCreate, ItemRead
+from service.item_service import create_item
 from entity.item import Item
 
 def test_create_item_success():

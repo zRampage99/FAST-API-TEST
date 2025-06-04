@@ -2,9 +2,10 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from sqlmodel import SQLModel
-from handler.Exception import register_exception_handlers
 from db import engine
-from controller.itemController import router
+from controller.item_controller import router
+from handler.exception import register_exception_handlers
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

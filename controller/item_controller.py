@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from db import get_session
-from service.itemService import create_item, get_item_by_id, get_items
+from service.item_service import create_item, get_item_by_id, get_items
 from sqlmodel import Session
 from typing import List
-from dto.itemDto import ItemCreate, ItemRead
-from handler.ApiResponse import ApiResponse
+from dto.item_dto import ItemCreate, ItemRead
+from handler.api_response import ApiResponse
 
 router = APIRouter(prefix="/item", tags=["item"])
 
