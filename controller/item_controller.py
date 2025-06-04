@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from db import get_session
+from repository.db import get_session
 from service.item_service import create_item, delete_item_by_id, get_item_by_id, get_items, update_item
 from sqlmodel import Session
 from typing import List
