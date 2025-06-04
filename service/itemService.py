@@ -22,4 +22,4 @@ def get_item_by_id(session: Session, item_id: int) -> ItemRead:
         raise HTTPException(status_code=404, detail=f"Item con ID {item_id} non trovato")
     print(type(result))
     print(result.__dict__)
-    return ItemRead.model_validate(result)  # Mappatura singolo oggetto
+    return ItemRead.model_validate(result)

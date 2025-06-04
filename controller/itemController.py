@@ -4,17 +4,21 @@ from service.itemService import create_item, get_item_by_id, get_items
 from sqlmodel import Session
 from typing import List
 from dto.itemDto import ItemCreate, ItemRead
+from handler.ApiResponse import ApiResponse
 
 router = APIRouter(prefix="/item", tags=["item"])
 
-@router.post("/", response_model=ItemRead)
-def add(item: ItemCreate, session: Session = Depends(get_session)):
-    return create_item(session, item)
-
-@router.get("/", response_model=List[ItemRead])
-def read_all(session: Session = Depends(get_session)):
-    return get_items(session)
-
-@router.get("/{item_id}", response_model=ItemRead)  # correggi qui
+@router.get("/{item_id}", response_model=ApiResponse[ItemRead])
 def read_by_id(item_id: int, session: Session = Depends(get_session)):
-    return get_item_by_id(session, item_id)
+    item = get_item_by_id(session, item_id)
+    return ApiResponse(success=True, data=item)
+
+@router.get("/", response_model=ApiResponse[List[ItemRead]])
+def read_all(session: Session = Depends(get_session)):
+    items = get_items(session)
+    return ApiResponse(success=True, data=items)
+
+@router.post("/", response_model=ApiResponse[ItemRead])
+def add(item: ItemCreate, session: Session = Depends(get_session)):
+    created_item = create_item(session, item)
+    return ApiResponse(success=True, message="Item creato con successo", data=created_item)
