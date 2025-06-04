@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from db import get_session
-from service.item_service import create_item, delete_item_by_id, get_item_by_id, get_items
+from service.item_service import create_item, delete_item_by_id, get_item_by_id, get_items, update_item
 from sqlmodel import Session
 from typing import List
-from dto.item_dto import ItemDtoCreate, ItemDto
+from dto.item_dto import ItemDtoCreate, ItemDto, ItemDtoUpdate
 from handler.api_response import ApiResponse, ApiResponseEmpty
 
 router = APIRouter(prefix="/item", tags=["item"])
@@ -22,6 +22,11 @@ def read_all(session: Session = Depends(get_session)):
 def add(item: ItemDtoCreate, session: Session = Depends(get_session)):
     created_item = create_item(session, item)
     return ApiResponse(success=True, message="Item creato con successo", data=created_item)
+
+@router.patch("/{item_id}", response_model=ApiResponse[ItemDtoUpdate])
+def update_item_by_id(item_id: int, item: ItemDtoUpdate, session: Session = Depends(get_session)):
+    updated_item = update_item(session, item_id, item)
+    return ApiResponse(success=True, message="Item aggiornato con successo", data=updated_item)
 
 @router.delete("/{item_id}", response_model=ApiResponseEmpty)
 def delete_by_id(item_id: int, session: Session = Depends(get_session)):
