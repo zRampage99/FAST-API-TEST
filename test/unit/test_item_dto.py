@@ -1,14 +1,14 @@
 import pytest
 from unittest.mock import MagicMock
 from decimal import Decimal
-from dto.item_dto import ItemCreate, ItemRead
+from dto.item_dto import ItemDtoCreate, ItemDto
 from service.item_service import create_item
 from entity.item import Item
 
 def test_create_item_success():
     # Arrange
     session = MagicMock()
-    item_data = ItemCreate(name="Pistola", description="Bellissima pistola", price=Decimal("1000.00"))
+    item_data = ItemDtoCreate(name="Pistola", description="Bellissima pistola", price=Decimal("1000.00"))
     expected_item = Item(id=1, name="Pistola", description="Bellissima pistola", price=Decimal("1000.00"), is_active=True)
     
     # Simula il comportamento di session.refresh per impostare l'id
@@ -20,7 +20,7 @@ def test_create_item_success():
     result = create_item(session, item_data)
 
     # Assert
-    assert isinstance(result, ItemRead)
+    assert isinstance(result, ItemDto)
     assert result.id == expected_item.id
     assert result.name == expected_item.name
     assert result.description == expected_item.description
