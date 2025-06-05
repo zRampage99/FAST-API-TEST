@@ -7,6 +7,7 @@ class ApiResponse(GenericModel, Generic[T]):
     success: bool
     message: Optional[str] = None
     data: Optional[T] = None
+    token: Optional[str] = None
 
 class ApiResponseEmpty(GenericModel, Generic[T]):
     success: bool

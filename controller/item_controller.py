@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from repository.db import get_session
 from service.item_service import create_item, delete_item_by_id, get_item_by_id, get_items, update_item
 from sqlmodel import Session
@@ -9,22 +9,26 @@ from auth.auth_bearer import JWTBearer
 
 item_router = APIRouter(
     prefix="/item",
-    tags=["item"],
-    dependencies=[Depends(JWTBearer())]
+    tags=["item"]
 )
 @item_router.get("/jwt")
 def jwt_protect():
     return {"message": "Items protected by JWT"}
 
 @item_router.get("/{item_id}", response_model=ApiResponse[ItemDto])
-def read_by_id(item_id: int, session: Session = Depends(get_session)):
+def get_by_id(item_id: int, session: Session = Depends(get_session)):
     item = get_item_by_id(session, item_id)
     return ApiResponse(success=True, data=item)
 
 @item_router.get("/", response_model=ApiResponse[List[ItemDto]])
-def read_all(session: Session = Depends(get_session)):
+def get_all(
+        request: Request, 
+        session: Session = Depends(get_session),
+        _: dict = Depends(JWTBearer())
+    ):
+    refreshed_token = request.state.new_token
     items = get_items(session)
-    return ApiResponse(success=True, data=items)
+    return ApiResponse(success=True, data=items, token=refreshed_token)
 
 @item_router.post("/", response_model=ApiResponse[ItemDto])
 def add(item: ItemDtoCreate, session: Session = Depends(get_session)):
