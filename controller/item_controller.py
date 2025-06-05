@@ -31,4 +31,4 @@ def update_item_by_id(item_id: int, item: ItemDtoUpdate, session: Session = Depe
 @router.delete("/{item_id}", response_model=ApiResponseEmpty)
 def delete_by_id(item_id: int, session: Session = Depends(get_session)):
     delete_item_by_id(session, item_id)
-    return ApiResponse(success=True, message=f"Item con ID {item_id} eliminato con successo")
+    return ApiResponseEmpty(success=True, message=f"Item con ID {item_id} eliminato con successo")
