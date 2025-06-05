@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from entity.token_blacklist import TokenBlacklist
 
-def add_token(db: Session, token: str):
+def add_token_to_blacklist(db: Session, token: str):
     db_token = TokenBlacklist(token=token)
     db.add(db_token)
     db.commit()

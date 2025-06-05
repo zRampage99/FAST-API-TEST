@@ -25,7 +25,7 @@ class ItemDtoCreate(BaseModel):
     #    return round(v, 2)
 
 class ItemDtoUpdate(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-    price: Optional[float] = None
+    name: Optional[str] = Field(default=None, min_length=3, max_length=50)
+    description: Optional[str] = Field(default=None, max_length=200)
+    price: Optional[Decimal] = Field(default=None, max_digits=10, decimal_places=2)
     is_active: Optional[bool] = None

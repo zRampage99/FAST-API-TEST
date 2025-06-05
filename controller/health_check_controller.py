@@ -8,4 +8,4 @@ health_check_router = APIRouter(
 )
 @health_check_router.get("")
 def jwt_protect():
-    return {"message": "Items protected by JWT"}
+    return {"message": "Controller: 'health_check_router' protected by JWT"}
