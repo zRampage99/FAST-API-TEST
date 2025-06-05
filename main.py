@@ -6,7 +6,6 @@ from controller.item_controller import item_router
 from controller.auth_controller import auth_router
 from controller.health_check_controller import health_check_router
 from handler.exception import register_exception_handlers
-from entity.token_blacklist import TokenBlacklist
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
