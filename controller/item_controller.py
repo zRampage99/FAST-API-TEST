@@ -11,16 +11,13 @@ item_router = APIRouter(
     prefix="/item",
     tags=["item"]
 )
-@item_router.get("/jwt")
-def jwt_protect():
-    return {"message": "Items protected by JWT"}
 
 @item_router.get("/{item_id}", response_model=ApiResponse[ItemDto])
 def get_by_id(item_id: int, session: Session = Depends(get_session)):
     item = get_item_by_id(session, item_id)
     return ApiResponse(success=True, data=item)
 
-@item_router.get("/", response_model=ApiResponse[List[ItemDto]])
+@item_router.get("", response_model=ApiResponse[List[ItemDto]])
 def get_all(
         request: Request, 
         session: Session = Depends(get_session),
@@ -30,7 +27,7 @@ def get_all(
     items = get_items(session)
     return ApiResponse(success=True, data=items, token=refreshed_token)
 
-@item_router.post("/", response_model=ApiResponse[ItemDto])
+@item_router.post("", response_model=ApiResponse[ItemDto])
 def add(item: ItemDtoCreate, session: Session = Depends(get_session)):
     created_item = create_item(session, item)
     return ApiResponse(success=True, message="Item creato con successo", data=created_item)
