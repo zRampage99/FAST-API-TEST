@@ -12,3 +12,4 @@ class ApiResponse(GenericModel, Generic[T]):
 class ApiResponseEmpty(GenericModel, Generic[T]):
     success: bool
     message: Optional[str] = None
+    token: Optional[str] = None

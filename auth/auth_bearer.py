@@ -13,15 +13,9 @@ class JWTBearer(HTTPBearer):
             if is_token_blacklisted(db, token):
                 raise HTTPException(status_code=403, detail="Token has been revoked")
 
-
             payload = verify_token(token)
             if payload:
                 request.state.new_token = create_access_token({"sub": payload["sub"]})
                 return payload
 
         raise HTTPException(status_code=403, detail="Invalid or expired token.")
-
-    
-
-
-
