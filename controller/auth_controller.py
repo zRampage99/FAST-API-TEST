@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from dto.role_dto import RoleDto
+from dto.shared_dto import RoleInfo
 from repository.db import get_session
 from sqlalchemy.orm import Session
 from handler.api_response import ApiResponse, ApiResponseEmpty
@@ -26,7 +26,7 @@ def register(
     
     user_info = UserInfo(
         username=new_user.username,
-        roles=[RoleDto(name=role.name) for role in new_user.roles]
+        roles=[RoleInfo(name=role.name) for role in new_user.roles]
     )
     return ApiResponse(
         success=True, 
@@ -47,7 +47,7 @@ def login(
     logged_user = UserLogged(
         username=user.username, 
         access_token=token,
-        roles=[RoleDto(name=role.name) for role in db_user.roles]
+        roles=[RoleInfo(name=role.name) for role in db_user.roles]
     )
     return ApiResponse(success=True, message="User logged successfully", data=logged_user)
 
@@ -76,7 +76,7 @@ def get_user_info(
     db_user = get_user_by_username(db, username)    
     user_info = UserInfo(
         username=db_user.username,
-        roles=[RoleDto(name=role.name) for role in db_user.roles]
+        roles=[RoleInfo(name=role.name) for role in db_user.roles]
     )
     return ApiResponse(
         success=True, 
