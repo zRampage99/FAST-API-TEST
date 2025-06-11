@@ -1,6 +1,7 @@
 from typing import List
 from pydantic import BaseModel, ConfigDict
 
+from dto.item_dto import ItemDtoInfo
 from dto.shared_dto import RoleInfo
 
 class UserCredential(BaseModel):
@@ -18,5 +19,6 @@ class UserLogged(BaseModel):
 class UserInfo(BaseModel):
     username: str
     roles: List[RoleInfo]
+    items: List[ItemDtoInfo]
     
     model_config = ConfigDict(from_attributes=True)

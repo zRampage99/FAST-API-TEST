@@ -47,9 +47,10 @@ def add(
         request: Request,
         item: ItemDtoCreate, 
         session: Session = Depends(get_session),
-        _: dict = Depends(require_role("ADMIN", "USER"))
+        _: dict = Depends(require_role("USER", "ADMIN"))
     ):
-    created_item = create_item(session, item)
+    username = request.state.user["sub"]
+    created_item = create_item(session, item, username)
     return ApiResponse(
         success=True, 
         message="Item creato con successo", 

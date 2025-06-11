@@ -15,6 +15,7 @@ class JWTBearer(HTTPBearer):
 
             payload = verify_token(token)
             if payload:
+                request.state.user = payload
                 request.state.new_token = create_access_token({"sub": payload["sub"]})
                 return payload
 

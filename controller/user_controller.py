@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from dto.shared_dto import RoleInfo
+from dto.item_dto import ItemDtoInfo
 from repository.db import get_session
 from sqlalchemy.orm import Session
 from handler.api_response import ApiResponse, ApiResponseEmpty
@@ -26,7 +27,9 @@ def register(
     
     user_info = UserInfo(
         username=new_user.username,
-        roles=[RoleInfo(name=role.name) for role in new_user.roles]
+        roles=[RoleInfo(name=role.name) for role in new_user.roles],
+        items=[ItemDtoInfo(name=item.name, id=item.id) for item in new_user.items]
+
     )
     return ApiResponse(
         success=True, 

@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from sqlmodel import SQLModel
 from repository.db import engine, init_roles
 from controller.item_controller import item_router
-from controller.auth_controller import auth_router
+from controller.user_controller import auth_router
 from controller.role_controller import role_router
 from controller.health_check_controller import health_check_router
 from handler.exception import register_exception_handlers
